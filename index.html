@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morse Code Translator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-image: url("{{ url_for('static', filename='background.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-color: rgba(255, 255, 255, 0);
+            background-blend-mode: lighten;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        .translator-box {
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            backdrop-filter: blur(2px);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+        }
+        h2 {
+            color: #444;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: rgba(249, 249, 249, 0.9);
+            border-radius: 4px;
+            min-height: 30px;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Morse Code Translator</h1>
+        
+        <div class="translator-box">
+            <h2>Morse to English</h2>
+            <form method="POST">
+                <textarea name="morse_code" placeholder="Enter Morse code (separate letters with spaces and words with '/')">{% if morse_result %}{{ request.form['morse_code'] }}{% endif %}</textarea>
+                <button type="submit" name="morse_submit">Translate to English</button>
+            </form>
+            {% if morse_result %}
+            <div class="result">
+                <strong>Translation:</strong> {{ morse_result }}
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="translator-box">
+            <h2>English to Morse</h2>
+            <form method="POST">
+                <textarea name="english_text" placeholder="Enter English text">{% if english_result %}{{ request.form['english_text'] }}{% endif %}</textarea>
+                <button type="submit" name="english_submit">Translate to Morse</button>
+            </form>
+            {% if english_result %}
+            <div class="result">
+                <strong>Translation:</strong> {{ english_result }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
